@@ -4,7 +4,7 @@ Revision: 1
 BuildDepends: fink (>=0.31.2), gcc49, texinfo-legacy
 Maintainer: Matthias Ringwald <freckle@users.sf.net>
 
-Source: mirror:gnu:binutils/binutils.zip
+Source: http://bluekitchen-gmbh.com/files/binutils-d3d7100a0d225f44d0bcfc05ae4ede96b462dc9b.zip
 Source-MD5: 9b11f5a5f45c5e5f4b03f8be3028aa9b
 
 # use original gcc
