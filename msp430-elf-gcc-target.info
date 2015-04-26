@@ -1,0 +1,70 @@
+Package: msp430-elf-gcc-target
+Version: 20141115
+Revision: 1
+Depends: <<
+  msp430-elf-binutils,
+  msp430-elf-gcc-host,
+  msp430-elf-newlib
+<<
+BuildDepends: <<
+  fink (>= 0.31.2),
+  gcc49,
+  gmp5 (>= 6.0.0a-3),
+  libiconv-dev,
+  libmpc3 (>= 1.0.2-2),
+  libmpfr4 (>= 3.1.2-2),
+  texinfo-legacy
+<<
+
+Maintainer: Matthias Ringwald <freckle@users.sf.net>
+
+Source: mirror:gnu:gcc/gcc.zip
+Source-MD5: 7fcfc2743058eab3a0b9c105e0712bc5
+
+# Source2: http://bluekitchen-gmbh.com/files/newlib.zip
+# Source2-MD5: ecf3e035c07b3ad0e3ad94e5d01e11d1
+
+# use original gcc
+SetCXX: g++-fsf-4.9
+SetCC: gcc-fsf-4.9
+
+#
+
+ConfigureParams: <<
+  --target=msp430-elf           \
+  --prefix=%p/lib/msp430-elf    \
+  --program-prefix=msp430-elf-  \
+  --mandir=%p/share/man         \
+  --infodir=%p/share/info       \
+  --with-newlib \
+  --enable-languages=c,c++      \
+  --disable-libssp              \
+  --disable-werror              \
+  --disable-nls
+<<
+
+CompileScript: <<
+  #!/bin/sh -ev
+  mkdir build-gcc
+  cd build-gcc
+  ../configure %c
+  make all-target
+<<
+
+InstallScript: <<
+    #!/bin/sh -ev
+    cd build-gcc
+    make install-target DESTDIR=%d
+    rm -fr %i/share/info/*
+<<
+
+DocFiles: README COPYING MAINTAINERS
+
+Description: GNU GCC for msp430-elf toolchain
+
+DescPort: <<
+Fink package based on toolchain built script from bsp430 project by Peter Bigot
+<<
+
+License: GPL
+Homepage: http://www.gnu.org/software/binutils

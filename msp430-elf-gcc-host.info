@@ -1,0 +1,73 @@
+Package: msp430-elf-gcc-host
+Version: 20141115
+Revision: 1
+Depends: <<
+  msp430-elf-binutils
+<<
+BuildDepends: <<
+  fink (>= 0.31.2),
+  gcc49,
+  gmp5 (>= 6.0.0a-3),
+  libiconv-dev,
+  libmpc3 (>= 1.0.2-2),
+  libmpfr4 (>= 3.1.2-2),
+  texinfo-legacy
+<<
+
+Maintainer: Matthias Ringwald <freckle@users.sf.net>
+
+Source: mirror:gnu:gcc/gcc.zip
+Source-MD5: 7fcfc2743058eab3a0b9c105e0712bc5
+
+# use original gcc
+SetCXX: g++-fsf-4.9
+SetCC: gcc-fsf-4.9
+
+ConfigureParams: <<
+  --target=msp430-elf           \
+  --prefix=%p/lib/msp430-elf    \
+  --program-prefix=msp430-elf-  \
+  --mandir=%p/share/man         \
+  --infodir=%p/share/info       \
+  --with-newlib \
+  --enable-languages=c,c++      \
+  --disable-libssp              \
+  --disable-libquadmath         \
+  --disable-werror              \
+  --disable-nls
+<<
+
+CompileScript: <<
+  #!/bin/sh -ev
+  mkdir build-gcc
+  cd build-gcc
+  ../configure %c
+  make all-host
+<<
+
+InstallScript: <<
+    #!/bin/sh -ev
+    cd build-gcc
+    make install-host DESTDIR=%d
+    # rm -fr %i/lib/msp430-elf/lib
+    rm -fr %i/share/info
+    rm -rf %i/share/man/man7
+
+    # provide symlinks in %p/bin
+    mkdir -p %i/bin
+    for p in %i/lib/msp430-elf/bin/* ; do
+      f=`basename $p`
+      ln -s %p/lib/msp430-elf/bin/$f %i/bin/$f
+    done
+<<
+
+DocFiles: README COPYING MAINTAINERS
+
+Description: GNU GCC for msp430-elf toolchain (bootstrap)
+
+DescPort: <<
+Fink package based on toolchain built script from bsp430 project by Peter Bigot
+<<
+
+License: GPL
+Homepage: http://www.gnu.org/software/binutils

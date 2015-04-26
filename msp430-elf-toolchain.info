@@ -1,0 +1,13 @@
+Package: msp430-elf-toolchain
+Version: 20141115
+Revision: 1
+Depends: msp430-elf-binutils, msp430-elf-gcc-host, msp430-elf-gcc-target, msp430-elf-newlib
+Maintainer: Matthias Ringwald <freckle@users.sf.net>
+Type: bundle
+
+Description: Complete smp430-toolchain
+
+DescPort: <<
+Fink package based on toolchain built script from bsp430 project by Peter Bigot
+<<
+License: GPL

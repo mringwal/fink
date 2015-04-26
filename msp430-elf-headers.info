@@ -1,0 +1,29 @@
+Package: msp430-elf-headers
+Version: 20141115
+Revision: 1
+BuildDepends: fink (>=0.31.2)
+Maintainer: Matthias Ringwald <freckle@users.sf.net>
+
+Source: mirror:gnu:binutils/msp430-elf.zip
+Source-MD5: 5e2dd9f364e93ce9f5a4cc559e8830a7
+
+CompileScript: echo Nothing to compile here
+
+InstallScript: <<
+    # create COPYING from file header
+    head -n 31 include/cc430f5137.ld > COPYING
+    # just move headers, as we don't need them afterwards
+    mkdir -p %i/lib/msp430-elf/msp430-elf
+    mv include/ %i/lib/msp430-elf/msp430-elf
+<<
+
+DocFiles: COPYING
+
+Description: CPU specific headers for msp430-elf toolchain
+
+DescPort: <<
+Fink package based on toolchain built script from bsp430 project by Peter Bigot
+<<
+
+License: BSD
+Homepage: https://github.com/pabigot/msp430-elf

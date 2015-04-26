@@ -1,0 +1,58 @@
+Package: msp430-elf-newlib
+Version: 20141115
+Revision: 1
+BuildDepends: <<
+  fink (>= 0.31.2),
+  msp430-elf-gcc-host
+<<
+
+Maintainer: Matthias Ringwald <freckle@users.sf.net>
+
+Source: http://bluekitchen-gmbh.com/files/newlib.zip
+Source-MD5: ecf3e035c07b3ad0e3ad94e5d01e11d1
+
+# use original gcc
+SetCXX: g++-fsf-4.9
+SetCC: gcc-fsf-4.9
+
+ConfigureParams: <<
+  --target=msp430-elf                   \
+  --prefix=%p/lib/msp430-elf            \
+  --disable-newlib-supplied-syscalls    \
+  --enable-newlib-reent-small           \
+  --disable-newlib-fseek-optimization   \
+  --disable-newlib-wide-orient          \
+  --enable-newlib-nano-formatted-io     \
+  --disable-newlib-io-float             \
+  --enable-newlib-nano-malloc           \
+  --disable-newlib-unbuf-stream-opt     \
+  --enable-lite-exit                    \
+  --enable-newlib-global-atexit         \
+  --disable-nls
+<<
+
+CompileScript: <<
+  #!/bin/sh -ev
+  mkdir build
+  cd build
+  ../configure %c
+  make
+<<
+
+InstallScript: <<
+    #!/bin/sh -ev
+    cd build
+    make install DESTDIR=%d
+    rm -fr %i/share/info/*
+<<
+
+DocFiles: README COPYING MAINTAINERS
+
+Description: Newlib for msp430-elf toolchain
+
+DescPort: <<
+Fink package based on toolchain built script from bsp430 project by Peter Bigot
+<<
+
+License: GPL
+Homepage: http://www.gnu.org/software/binutils

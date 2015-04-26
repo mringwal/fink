@@ -1,0 +1,59 @@
+Package: msp430-elf-binutils
+Version: 20141115
+Revision: 1
+BuildDepends: fink (>=0.31.2), gcc49, texinfo-legacy
+Maintainer: Matthias Ringwald <freckle@users.sf.net>
+
+Source: mirror:gnu:binutils/binutils.zip
+Source-MD5: 9b11f5a5f45c5e5f4b03f8be3028aa9b
+
+# use original gcc
+SetCXX: g++-fsf-4.9
+SetCC: gcc-fsf-4.9
+
+ConfigureParams: <<
+  --target=msp430-elf           \
+  --prefix=%p/lib/msp430-elf    \
+  --program-prefix=msp430-elf-  \
+  --mandir=%p/share/man         \
+  --infodir=%p/share/info       \
+  --disable-sim                 \
+  --disable-gdb                 \
+  --disable-werror              \
+  --disable-nls
+<<
+
+CompileScript: <<
+    #!/bin/sh -ev
+    mkdir build
+    cd build
+    ../configure %c
+    export PATH=%p/opt/texinfo-legacy/bin:$PATH
+    make
+<<
+
+InstallScript: <<
+    #!/bin/sh -ev
+    cd build
+    export PATH=%p/opt/texinfo-legacy/bin:$PATH
+    make install DESTDIR=%d
+    rm -fr %i/share/info/*
+
+    # provide symlinks in %p/bin
+    mkdir -p %i/bin
+    for p in %i/lib/msp430-elf/bin/* ; do
+      f=`basename $p`
+      ln -s %p/lib/msp430-elf/bin/$f %i/bin/$f
+    done
+<<
+
+DocFiles: README COPYING MAINTAINERS
+
+Description: GNU binutils of msp430-elf toolchain
+
+DescPort: <<
+Fink package based on toolchain built script from bsp430 project by Peter Bigot
+<<
+
+License: GPL
+Homepage: http://www.gnu.org/software/binutils
