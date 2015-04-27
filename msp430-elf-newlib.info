@@ -10,6 +10,7 @@ Maintainer: Matthias Ringwald <freckle@users.sf.net>
 
 Source: http://bluekitchen-gmbh.com/files/newlib-9b9f839addfe16ab0fd11f09a30a28139bfae6d5.zip
 Source-MD5: ecf3e035c07b3ad0e3ad94e5d01e11d1
+SourceDirectory: newlib
 
 # use original gcc
 SetCXX: g++-fsf-4.9

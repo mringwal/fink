@@ -18,6 +18,7 @@ Maintainer: Matthias Ringwald <freckle@users.sf.net>
 
 Source: http://bluekitchen-gmbh.com/files/gcc-388a5b26893e35fae82423a99984896846ddb9fb.zip
 Source-MD5: 7fcfc2743058eab3a0b9c105e0712bc5
+SourceDirectory: gcc
 
 # use original gcc
 SetCXX: g++-fsf-4.9

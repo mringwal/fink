@@ -6,6 +6,7 @@ Maintainer: Matthias Ringwald <freckle@users.sf.net>
 
 Source: http://bluekitchen-gmbh.com/files/msp430-elf-104bb0f78a95ec54d5184288fa2e355df3dd255f.zip
 Source-MD5: 5e2dd9f364e93ce9f5a4cc559e8830a7
+SourceDirectory: msp430-elf
 
 CompileScript: echo Nothing to compile here
 
